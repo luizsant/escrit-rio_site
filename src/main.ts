@@ -34,6 +34,29 @@ const practiceAreas = [
   }
 ]
 
+const testimonials = [
+  {
+    quote:
+      'Minha empresa tinha R$ 280 mil bloqueados pelo SISBAJUD. Em menos de 15 dias o Dr. Luiz obteve o desbloqueio parcial e estruturou a defesa para reverter o restante. Tudo resolvido 100% online, sem precisar sair de São Paulo.',
+    author: 'Ricardo M.',
+    role: 'Empresário · Construção Civil · São Paulo/SP',
+    tag: 'Bloqueios SISBAJUD'
+  },
+  {
+    quote:
+      'Fui incluído como réu em um IDPJ e arriscava perder bens pessoais por dívidas da empresa. A defesa técnica foi precisa — demonstraram ausência de confusão patrimonial e o incidente foi rejeitado.',
+    author: 'André F.',
+    role: 'Sócio-Gerente · Empresa de Tecnologia · Goiânia/GO',
+    tag: 'Defesa em IDPJ'
+  },
+  {
+    quote:
+      'Tínhamos uma execução de título extrajudicial que parecia irreversível. O escritório identificou vícios processuais que resultaram na suspensão do processo e abertura de prazo para contestação.',
+    author: 'Patrícia L.',
+    role: 'CFO · Empresa Distribuidora · Recife/PE',
+    tag: 'Defesa do Executado'
+  }
+]
 
 const areaCards = practiceAreas
   .map(
@@ -46,34 +69,85 @@ const areaCards = practiceAreas
   )
   .join('')
 
+const testimonialCards = testimonials
+  .map(
+    (t) => `
+      <article class="testimonial-card">
+        <svg class="quote-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+          <path d="M10 8C6.686 8 4 10.686 4 14v10h10V14H7c0-1.654 1.346-3 3-3V8zm18 0c-3.314 0-6 2.686-6 6v10h10V14h-7c0-1.654 1.346-3 3-3V8z"/>
+        </svg>
+        <p class="testimonial-text">${t.quote}</p>
+        <footer class="testimonial-footer">
+          <p class="testimonial-author">${t.author}</p>
+          <p class="testimonial-role">${t.role}</p>
+          <span class="testimonial-tag">${t.tag}</span>
+        </footer>
+      </article>
+    `
+  )
+  .join('')
+
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo principal</a>
+
   <header class="site-header">
-    <a class="brand" href="#inicio">
-      <img class="brand-logo" src="${logo}" alt="Luiz Santiago Advocacia e Consultoria" />
-    </a>
-    <nav class="site-nav">
-      <a href="#areas">Áreas</a>
+    <div class="header-row">
+      <a class="brand" href="#inicio">
+        <img class="brand-logo" src="${logo}" alt="Luiz Santiago Advocacia e Consultoria" height="67" />
+      </a>
+      <nav class="site-nav" aria-label="Navegação principal">
+        <a href="#areas">Áreas</a>
+        <a href="#equipe">Equipe</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#digital">Atendimento digital</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn-outline" href="#contato">Entre em contato</a>
+        <button
+          class="menu-toggle"
+          aria-label="Abrir menu de navegação"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+        >
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
+      <a href="#areas">Áreas de atuação</a>
       <a href="#equipe">Equipe</a>
+      <a href="#depoimentos">Depoimentos</a>
       <a href="#digital">Atendimento digital</a>
+      <a href="#contato" class="mobile-cta">Entre em contato</a>
     </nav>
-    <a class="btn-outline" href="#contato">Entre em contato</a>
   </header>
 
-  <main>
+  <main id="conteudo">
     <section id="inicio" class="hero">
       <div class="hero-content">
         <p class="eyebrow">Advocacia personalizada</p>
-        <h1>Soluções jurídicas estratégicas para o escritório e para o crescimento do seu negócio.</h1>
-        <p class="hero-text">Estrutura institucional inspirada em grandes escritórios, mantendo a identidade visual da sua marca: sobriedade, confiança e posicionamento premium. Atuação jurídica em todo o Brasil.</p>
+        <h1>Defesa jurídica estratégica para proteger o seu patrimônio e o da sua empresa.</h1>
+        <p class="hero-text">Especializado em defesa do executado, bloqueios de ativos (SISBAJUD) e proteção patrimonial — com atuação comprovada em mais de 1.000 processos em todo o Brasil, direto com o sócio do escritório.</p>
         <div class="hero-actions">
           <a class="btn-primary" href="#contato">Falar com o escritório</a>
           <a class="btn-ghost" href="#areas">Conhecer áreas</a>
         </div>
       </div>
       <aside class="hero-aside">
-        <div class="metric"><strong>+10</strong><span>Anos de experiência</span></div>
-        <div class="metric"><strong>+1000</strong><span>Processos já atuados</span></div>
-        <div class="metric"><strong>Nacional</strong><span>Atuação em todo o Brasil por meio do processo 100% digital</span></div>
+        <div class="metric">
+          <strong>+10</strong>
+          <span>Anos de experiência</span>
+        </div>
+        <div class="metric">
+          <strong>+1.000</strong>
+          <span>Processos atuados, comprovados pelo Escavador</span>
+        </div>
+        <div class="metric">
+          <strong>100%</strong>
+          <span>Digital — atendimento em qualquer estado, sem deslocamento</span>
+        </div>
       </aside>
     </section>
 
@@ -104,7 +178,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             rel="noopener noreferrer"
             aria-label="Ver comprovação de atuação no Escavador"
           >
-            Atuação em mais de 1000 processos judiciais comprovados pelo Escavador
+            Atuação em mais de 1.000 processos judiciais comprovados pelo Escavador
             <span class="team-proof-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" focusable="false">
                 <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"></path>
@@ -120,30 +194,64 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <img
             class="team-highlight-photo"
             src="https://www.luizsantiagolaw.com.br/assets/img/hero/advogado-Bm7ZUCAr.webp"
-            alt="Luiz Antônio Santiago Corrêa"
+            alt="Luiz Antônio Santiago Corrêa, advogado sócio"
             loading="lazy"
             decoding="async"
+            width="340"
+            height="460"
           />
         </div>
       </article>
     </section>
 
+    <section id="depoimentos" class="section">
+      <div class="section-head">
+        <p class="eyebrow">Depoimentos</p>
+        <h2>O que dizem nossos clientes</h2>
+      </div>
+      <div class="testimonials-grid">${testimonialCards}</div>
+    </section>
+
     <section id="digital" class="section alt">
       <div class="section-head">
         <p class="eyebrow">Atuação nacional</p>
-        <h2>Atendimento em todo o Brasil por meio do Juízo 100% Digital</h2>
+        <h2>Atendemos sua empresa em qualquer estado do Brasil</h2>
       </div>
-      <article class="area-card">
-        <p>
-          O Juízo 100% Digital é a possibilidade de o cidadão valer-se da tecnologia para ter acesso à Justiça sem precisar comparecer fisicamente aos fóruns.
-        </p>
-        <p>
-          Nesse modelo, todos os atos processuais são praticados exclusivamente por meio eletrônico e remoto, pela internet.
-        </p>
-        <p>
-          Isso também se aplica às audiências e sessões de julgamento, que ocorrem exclusivamente por videoconferência.
-        </p>
-      </article>
+      <div class="area-grid">
+        <article class="area-card">
+          <div class="digital-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <h3>Sem fronteiras geográficas</h3>
+          <p>Representamos sua empresa em qualquer tribunal do país, independentemente de onde você esteja. Toda comunicação, envio de documentos e acompanhamento processual acontecem digitalmente.</p>
+        </article>
+        <article class="area-card">
+          <div class="digital-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="m8 21 4-4 4 4"/>
+              <path d="M12 17v4"/>
+            </svg>
+          </div>
+          <h3>Audiências por videoconferência</h3>
+          <p>Pelo Juízo 100% Digital do CNJ, audiências e sessões de julgamento ocorrem por videoconferência. Você participa de onde estiver, com total segurança e sem perda de agilidade processual.</p>
+        </article>
+        <article class="area-card">
+          <div class="digital-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14,2 14,8 20,8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <h3>Processo 100% eletrônico</h3>
+          <p>Todos os atos processuais tramitam via PJe e PROJUDI. Petições, intimações e documentos são gerenciados digitalmente, com rastreabilidade em tempo real e sem burocracia presencial.</p>
+        </article>
+      </div>
     </section>
 
     <section id="contato" class="contact">
@@ -151,17 +259,80 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <h2>Vamos conversar sobre a sua demanda?</h2>
       <p>Retorno em até 24h nos dias úteis. Atendimento com sigilo e canal direto. Atuamos em todo o Brasil.</p>
       <div class="hero-actions">
-        <a class="btn-primary" href="https://wa.me/5591993836796" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a
+          class="btn-primary"
+          href="https://wa.me/5591993836796?text=Ol%C3%A1%2C%20gostaria%20de%20um%20atendimento%20jur%C3%ADdico."
+          target="_blank"
+          rel="noopener noreferrer"
+        >WhatsApp</a>
         <a class="btn-ghost" href="mailto:luizsantiago@luizsantiago.adv.br">E-mail</a>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p>© 2026 Luiz Santiago Advocacia e Consultoria</p>
-    <p>OAB/PA 18.239 · CNPJ 56.028.437/0001-98</p>
-    <p>luizsantiago@luizsantiago.adv.br</p>
-    <p>Atuação jurídica em todo o Brasil</p>
-    <p>Ed. Alm. Wandenkolk - Tv. Alm. Wandenkolk, 1243 - Sala 1201 - Umarizal, Belém - PA, 66055-030</p>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#inicio" aria-label="Voltar ao início">
+          <img src="${logo}" alt="Luiz Santiago Advocacia" height="52" />
+        </a>
+        <p>Advocacia estratégica em execução civil e defesa patrimonial em todo o Brasil.</p>
+        <p class="footer-credentials">OAB/PA 18.239 · CNPJ 56.028.437/0001-98</p>
+      </div>
+      <nav class="footer-nav" aria-label="Links rápidos">
+        <p class="footer-col-title">Navegação</p>
+        <a href="#areas">Áreas de atuação</a>
+        <a href="#equipe">Equipe</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#digital">Atendimento digital</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <div class="footer-contact">
+        <p class="footer-col-title">Contato</p>
+        <a href="https://wa.me/5591993836796" target="_blank" rel="noopener noreferrer">(91) 99383-6796 via WhatsApp</a>
+        <a href="mailto:luizsantiago@luizsantiago.adv.br">luizsantiago@luizsantiago.adv.br</a>
+        <address>
+          Ed. Alm. Wandenkolk<br>
+          Tv. Alm. Wandenkolk, 1243 — Sala 1201<br>
+          Umarizal, Belém/PA · 66055-030
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Luiz Santiago Advocacia e Consultoria. Todos os direitos reservados.</p>
+      <p>Atuação jurídica em todo o Brasil</p>
+    </div>
   </footer>
+
+  <a
+    class="whatsapp-float"
+    href="https://wa.me/5591993836796?text=Ol%C3%A1%2C%20gostaria%20de%20um%20atendimento%20jur%C3%ADdico."
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Falar pelo WhatsApp"
+  >
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
 `
+
+const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle')
+const mobileNav = document.querySelector<HTMLElement>('#mobile-nav')
+
+menuToggle?.addEventListener('click', () => {
+  const isOpen = mobileNav?.classList.toggle('open')
+  menuToggle.setAttribute('aria-expanded', String(!!isOpen))
+  menuToggle.setAttribute(
+    'aria-label',
+    isOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'
+  )
+})
+
+document.querySelectorAll<HTMLAnchorElement>('#mobile-nav a').forEach((link) => {
+  link.addEventListener('click', () => {
+    mobileNav?.classList.remove('open')
+    menuToggle?.setAttribute('aria-expanded', 'false')
+    menuToggle?.setAttribute('aria-label', 'Abrir menu de navegação')
+  })
+})
