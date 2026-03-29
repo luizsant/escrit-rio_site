@@ -100,6 +100,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <a href="#equipe">Equipe</a>
         <a href="#depoimentos">Depoimentos</a>
         <a href="#digital">Atendimento digital</a>
+        <a href="#noticias">Notícias</a>
       </nav>
       <div class="header-actions">
         <a class="btn-outline" href="#contato">Entre em contato</a>
@@ -120,6 +121,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <a href="#equipe">Equipe</a>
       <a href="#depoimentos">Depoimentos</a>
       <a href="#digital">Atendimento digital</a>
+      <a href="#noticias">Notícias</a>
       <a href="#contato" class="mobile-cta">Entre em contato</a>
     </nav>
   </header>
@@ -254,6 +256,22 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
     </section>
 
+    <section id="noticias" class="section">
+      <div class="section-head">
+        <p class="eyebrow">Notícias jurídicas</p>
+        <h2>Atualizações do mundo do direito</h2>
+      </div>
+      <div class="news-grid" id="news-grid">
+        <div class="news-skeleton"></div>
+        <div class="news-skeleton"></div>
+        <div class="news-skeleton"></div>
+        <div class="news-skeleton"></div>
+        <div class="news-skeleton"></div>
+        <div class="news-skeleton"></div>
+      </div>
+      <p class="news-sources">Fontes: Conjur · JOTA</p>
+    </section>
+
     <section id="contato" class="contact">
       <p class="eyebrow">Contato</p>
       <h2>Vamos conversar sobre a sua demanda?</h2>
@@ -285,6 +303,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <a href="#equipe">Equipe</a>
         <a href="#depoimentos">Depoimentos</a>
         <a href="#digital">Atendimento digital</a>
+        <a href="#noticias">Notícias</a>
         <a href="#contato">Contato</a>
       </nav>
       <div class="footer-contact">
@@ -336,3 +355,58 @@ document.querySelectorAll<HTMLAnchorElement>('#mobile-nav a').forEach((link) => 
     menuToggle?.setAttribute('aria-label', 'Abrir menu de navegação')
   })
 })
+
+interface NewsArticle {
+  title: string
+  link: string
+  date: string
+  source: string
+}
+
+function formatNewsDate(dateStr: string): string {
+  if (!dateStr) return ''
+  const d = new Date(dateStr)
+  if (isNaN(d.getTime())) return ''
+  return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })
+}
+
+async function loadNews(): Promise<void> {
+  const grid = document.querySelector<HTMLElement>('#news-grid')
+  if (!grid) return
+
+  try {
+    const res = await fetch('/api/noticias')
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const { articles } = (await res.json()) as { articles: NewsArticle[] }
+
+    if (!articles.length) {
+      grid.innerHTML = '<p class="news-empty">Nenhuma notícia disponível no momento.</p>'
+      return
+    }
+
+    grid.innerHTML = articles
+      .map(
+        (a) => `
+        <article class="news-card">
+          <div class="news-meta">
+            <span class="news-source-badge">${a.source}</span>
+            <span>${formatNewsDate(a.date)}</span>
+          </div>
+          <h3>${a.title}</h3>
+          <a
+            href="${a.link}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Ler matéria: ${a.title}"
+          >Ler no site →</a>
+        </article>
+      `
+      )
+      .join('')
+  } catch {
+    grid.innerHTML =
+      '<p class="news-empty">Não foi possível carregar as notícias. Tente novamente mais tarde.</p>'
+  }
+}
+
+void loadNews()
