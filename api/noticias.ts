@@ -1,6 +1,15 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import Parser from 'rss-parser'
 
+function secondsUntilNext8amBRT(): number {
+  const now = new Date()
+  const brt = new Date(now.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }))
+  const next8am = new Date(brt)
+  next8am.setHours(8, 0, 0, 0)
+  if (brt >= next8am) next8am.setDate(next8am.getDate() + 1)
+  return Math.max(Math.floor((next8am.getTime() - brt.getTime()) / 1000), 60)
+}
+
 interface Article {
   title: string
   link: string
@@ -43,7 +52,8 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 6)
 
-  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400')
+  const ttl = secondsUntilNext8amBRT()
+  res.setHeader('Cache-Control', `s-maxage=${ttl}, stale-while-revalidate=3600`)
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.json({ articles })
 }
