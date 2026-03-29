@@ -7,6 +7,7 @@ interface Article {
   link: string
   date: string
   source: string
+  snippet: string
 }
 
 const FEEDS = [
@@ -27,14 +28,17 @@ function devApiPlugin(): Plugin {
         const results = await Promise.allSettled(
           FEEDS.map(async (feed) => {
             const parsed = await parser.parseURL(feed.url)
-            return parsed.items.slice(0, 3).map(
-              (item): Article => ({
+            return parsed.items.slice(0, 3).map((item): Article => {
+              const raw = item.contentSnippet ?? item.summary ?? ''
+              const snippet = raw.replace(/\s+/g, ' ').trim().slice(0, 160)
+              return {
                 title: item.title ?? '',
                 link: item.link ?? '',
                 date: item.pubDate ?? item.isoDate ?? '',
                 source: feed.source,
-              })
-            )
+                snippet: snippet.length === 160 ? snippet + '…' : snippet,
+              }
+            })
           })
         )
 

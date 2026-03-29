@@ -361,6 +361,7 @@ interface NewsArticle {
   link: string
   date: string
   source: string
+  snippet: string
 }
 
 function formatNewsDate(dateStr: string): string {
@@ -393,6 +394,7 @@ async function loadNews(): Promise<void> {
             <span>${formatNewsDate(a.date)}</span>
           </div>
           <h3>${a.title}</h3>
+          ${a.snippet ? `<p class="news-snippet">${a.snippet}</p>` : ''}
           <a
             href="${a.link}"
             target="_blank"
