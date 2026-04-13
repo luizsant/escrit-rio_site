@@ -3,31 +3,37 @@ import logo from './assets/logo-advocacia-ts.png'
 
 const practiceAreas = [
   {
+    icon: 'scale',
     title: 'Defesa do Executado',
     description:
       'Atuação especializada em execução de título extrajudicial, cumprimento de sentença, ação monitória e ação de cobrança, com estratégia processual para reduzir constrições e preservar patrimônio.'
   },
   {
+    icon: 'scroll-text',
     title: 'Direito Processual Civil',
     description:
       'Condução técnica de procedimentos e recursos no CPC, com domínio em temas sensíveis de instrução e prova, inclusive em debates sobre aspectos polêmicos da prova.'
   },
   {
+    icon: 'lock-keyhole',
     title: 'Bloqueios de Ativos (SISBAJUD)',
     description:
       'Estruturação de medidas para impugnação de penhoras on-line e pedidos de desbloqueio, com abordagem rápida para minimizar impactos financeiros e operacionais.'
   },
   {
-    title: 'Gestão de Provas',
+    icon: 'heart-pulse',
+    title: 'Direito à Saúde (Falso Coletivo)',
     description:
-      'Planejamento e produção probatória orientada ao resultado, incluindo organização documental, prova técnica e suporte em perícias para fortalecer a defesa.'
+      'Atuação estratégica na tese do falso coletivo para revisão de reajustes abusivos em planos de saúde, com pedidos de liminar, aplicação de parâmetros da ANS e restituição de valores pagos indevidamente.'
   },
   {
+    icon: 'landmark',
     title: 'Direito Bancário',
     description:
       'Atuação em controvérsias com instituições financeiras, revisão de encargos e estratégias defensivas em cobranças e execuções de natureza bancária.'
   },
   {
+    icon: 'shield-check',
     title: 'Defesa em IDPJ',
     description:
       'Defesa técnica no Incidente de Desconsideração da Personalidade Jurídica, com foco em afastar responsabilização indevida de sócios e proteger patrimônio pessoal.'
@@ -37,24 +43,24 @@ const practiceAreas = [
 const testimonials = [
   {
     quote:
-      'Minha empresa tinha R$ 280 mil bloqueados pelo SISBAJUD. Em menos de 15 dias o Dr. Luiz obteve o desbloqueio parcial e estruturou a defesa para reverter o restante. Tudo resolvido 100% online, sem precisar sair de São Paulo.',
-    author: 'Ricardo M.',
-    role: 'Empresário · Construção Civil · São Paulo/SP',
-    tag: 'Bloqueios SISBAJUD'
+      'Atendimento profissional, bem detalhado e com muita atenção às necessidades do cliente. Luiz demonstra profundo conhecimento em seu campo de atuação e presta todo suporte em todas as etapas do processo.',
+    author: 'Felipe Alvarenga',
+    role: 'Avaliação no Google',
+    tag: '★★★★★'
   },
   {
     quote:
-      'Fui incluído como réu em um IDPJ e arriscava perder bens pessoais por dívidas da empresa. A defesa técnica foi precisa — demonstraram ausência de confusão patrimonial e o incidente foi rejeitado.',
-    author: 'André F.',
-    role: 'Sócio-Gerente · Empresa de Tecnologia · Goiânia/GO',
-    tag: 'Defesa em IDPJ'
+      'A confiança que tive ao lidar com o Luiz dá o conforto que qualquer um precisa pra escolher um profissional. Excelente trabalho.',
+    author: 'Italo José Barbosa Mácola',
+    role: 'Avaliação no Google',
+    tag: '★★★★★'
   },
   {
     quote:
-      'Tínhamos uma execução de título extrajudicial que parecia irreversível. O escritório identificou vícios processuais que resultaram na suspensão do processo e abertura de prazo para contestação.',
-    author: 'Patrícia L.',
-    role: 'CFO · Empresa Distribuidora · Recife/PE',
-    tag: 'Defesa do Executado'
+      'Sua expertise e dedicação foram comprovadas em diversos casos em que tive a oportunidade de tê-lo como meu representante legal. Sempre demonstrou profundo conhecimento jurídico, alcançando resultados rápidos.',
+    author: 'Ana Cristina Rufino',
+    role: 'Avaliação no Google',
+    tag: '★★★★★'
   }
 ]
 
@@ -62,6 +68,7 @@ const areaCards = practiceAreas
   .map(
     (area) => `
       <article class="area-card">
+        <span class="card-icon lucide-icon" aria-hidden="true"><i data-lucide="${area.icon}"></i></span>
         <h3>${area.title}</h3>
         <p>${area.description}</p>
       </article>
@@ -73,9 +80,7 @@ const testimonialCards = testimonials
   .map(
     (t) => `
       <article class="testimonial-card">
-        <svg class="quote-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
-          <path d="M10 8C6.686 8 4 10.686 4 14v10h10V14H7c0-1.654 1.346-3 3-3V8zm18 0c-3.314 0-6 2.686-6 6v10h10V14h-7c0-1.654 1.346-3 3-3V8z"/>
-        </svg>
+        <span class="quote-icon lucide-icon" aria-hidden="true"><i data-lucide="quote"></i></span>
         <p class="testimonial-text">${t.quote}</p>
         <footer class="testimonial-footer">
           <p class="testimonial-author">${t.author}</p>
@@ -134,7 +139,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <p class="hero-text">Especializado em defesa do executado, bloqueios de ativos (SISBAJUD) e proteção patrimonial — com atuação comprovada em mais de 1.000 processos em todo o Brasil, direto com o sócio do escritório.</p>
         <div class="hero-actions">
           <a class="btn-primary" href="#contato">Falar com o escritório</a>
-          <a class="btn-ghost" href="#areas">Conhecer áreas</a>
+          <a class="btn-ghost" href="#areas">
+            <span class="lucide-icon btn-icon" aria-hidden="true"><i data-lucide="sparkles"></i></span>
+            Conhecer áreas
+          </a>
         </div>
       </div>
       <aside class="hero-aside">
@@ -222,33 +230,21 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <div class="area-grid">
         <article class="area-card">
           <div class="digital-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            </svg>
+            <span class="lucide-icon"><i data-lucide="globe"></i></span>
           </div>
           <h3>Sem fronteiras geográficas</h3>
           <p>Representamos sua empresa em qualquer tribunal do país, independentemente de onde você esteja. Toda comunicação, envio de documentos e acompanhamento processual acontecem digitalmente.</p>
         </article>
         <article class="area-card">
           <div class="digital-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="3" width="20" height="14" rx="2"/>
-              <path d="m8 21 4-4 4 4"/>
-              <path d="M12 17v4"/>
-            </svg>
+            <span class="lucide-icon"><i data-lucide="monitor-smartphone"></i></span>
           </div>
           <h3>Audiências por videoconferência</h3>
           <p>Pelo Juízo 100% Digital do CNJ, audiências e sessões de julgamento ocorrem por videoconferência. Você participa de onde estiver, com total segurança e sem perda de agilidade processual.</p>
         </article>
         <article class="area-card">
           <div class="digital-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14,2 14,8 20,8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
-            </svg>
+            <span class="lucide-icon"><i data-lucide="file-text"></i></span>
           </div>
           <h3>Processo 100% eletrônico</h3>
           <p>Todos os atos processuais tramitam via PJe e PROJUDI. Petições, intimações e documentos são gerenciados digitalmente, com rastreabilidade em tempo real e sem burocracia presencial.</p>
@@ -282,8 +278,14 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           href="https://wa.me/5591993836796?text=Ol%C3%A1%2C%20gostaria%20de%20um%20atendimento%20jur%C3%ADdico."
           target="_blank"
           rel="noopener noreferrer"
-        >WhatsApp</a>
-        <a class="btn-ghost" href="mailto:luizsantiago@luizsantiago.adv.br">E-mail</a>
+        >
+          <span class="lucide-icon btn-icon" aria-hidden="true"><i data-lucide="message-circle"></i></span>
+          WhatsApp
+        </a>
+        <a class="btn-ghost" href="mailto:luizsantiago@luizsantiago.adv.br">
+          <span class="lucide-icon btn-icon" aria-hidden="true"><i data-lucide="mail"></i></span>
+          E-mail
+        </a>
       </div>
     </section>
   </main>
@@ -335,6 +337,40 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </svg>
   </a>
 `
+
+function initLucideIcons(root?: ParentNode): void {
+  const lucideApi = (window as Window & { lucide?: { createIcons: (opts?: { root?: ParentNode }) => void } }).lucide
+  if (!lucideApi) return
+  lucideApi.createIcons(root ? { root } : undefined)
+}
+
+function initPremiumReveal(): void {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll<HTMLElement>('.reveal').forEach((el) => el.classList.add('is-inview'))
+    return
+  }
+
+  const io = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        entry.target.classList.add('is-inview')
+        observer.unobserve(entry.target)
+      })
+    },
+    { rootMargin: '0px 0px -8% 0px', threshold: 0 }
+  )
+
+  document
+    .querySelectorAll<HTMLElement>(
+      '.hero-content, .hero-aside .metric, .section-head, .area-card, .team-highlight, .testimonial-card, .news-card, .contact > *, .site-footer > *'
+    )
+    .forEach((el, i) => {
+      el.classList.add('reveal')
+      el.style.setProperty('--reveal-delay', `${Math.min(i * 0.04, 0.32)}s`)
+      io.observe(el)
+    })
+}
 
 const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle')
 const mobileNav = document.querySelector<HTMLElement>('#mobile-nav')
@@ -405,10 +441,13 @@ async function loadNews(): Promise<void> {
       `
       )
       .join('')
+    initLucideIcons(grid)
   } catch {
     grid.innerHTML =
       '<p class="news-empty">Não foi possível carregar as notícias. Tente novamente mais tarde.</p>'
   }
 }
 
+initLucideIcons()
+initPremiumReveal()
 void loadNews()
