@@ -178,7 +178,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div class="team-highlight-content">
           <p class="eyebrow">Mini currículo</p>
           <h3>Luiz Antônio Santiago Corrêa</h3>
-          <p class="role">Sócio · OAB/PA 18.239</p>
+          <p class="role">Sócio · OAB/PA 18.239 · OAB/SP 549.491</p>
           <p>Mestre em Direito Econômico pelo IDP (Brasília) e Mestre em Direito Empresário pela Pontificia Universidad Católica Argentina (Buenos Aires).</p>
           <p>Especialista em defesa do executado, com atuação em execuções, cumprimento de sentença, bloqueios de ativos (SISBAJUD) e estratégia processual para proteção patrimonial.</p>
           <a
@@ -297,7 +297,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <img src="${logo}" alt="Luiz Santiago Advocacia" height="52" />
         </a>
         <p>Advocacia estratégica em execução civil e defesa patrimonial em todo o Brasil.</p>
-        <p class="footer-credentials">OAB/PA 18.239 · CNPJ 56.028.437/0001-98</p>
+        <p class="footer-credentials">OAB/PA 18.239 · OAB/SP 549.491 · CNPJ 56.028.437/0001-98</p>
       </div>
       <nav class="footer-nav" aria-label="Links rápidos">
         <p class="footer-col-title">Navegação</p>
